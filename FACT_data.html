@@ -9,5 +9,14 @@
 <h1>NYC FACT Team Data</h1>
 </body>
 
+<script type="text/python">
+from browser import document, alert
+ 
+def greet(event):
+    alert("Hello " + document["name-box"].value + "!")
+ 
+document["greet-button"].bind("click", greet)
+</script>  
+  
 </html>
 
