@@ -1,22 +1,25 @@
 <!DOCTYPE html>
+
 <html>
 
-<head>
-<title>NYC FACT Team Data</title>
-</head>
+ <head>
+  <title>NYC FACT Team Data</title>
+  <script type="text/javascript" src="http://brython.info/src/brython.js"></script>
+ </head>
 
-<body onload="brython()">
-<h1>NYC FACT Team Data</h1>
-</body>
-
-<script type="text/python">
-from browser import document, alert
- 
-def greet(event):
-    alert("Hello " + document["name-box"].value + "!")
- 
-document["greet-button"].bind("click", greet)
-</script>  
+ <body onload="brython()">
+  <h1>NYC FACT Team Data</h1>
   
+  <script type="text/python">
+  from browser import document, alert
+  
+  def greet(event):
+   alert("Hello " + document["name-box"].value + "!")
+   
+  document["greet-button"].bind("click", greet)
+  </script>  
+ 
+ </body>
+ 
 </html>
 
