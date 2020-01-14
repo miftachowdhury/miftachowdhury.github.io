@@ -11,12 +11,50 @@
   <h1>NYC FACT Team Data</h1>
   
   <script type="text/python">
-            from browser import document, alert
   
-            def echo(event):
-                alert(document["zone"].value)
+         import urllib.request as ur
+         import json
+         import pandas as pd
+         import numpy as np
+         import plotly.graph_objects as go
 
-            document["mybutton"].bind("click", echo)
+         with ur.urlopen('https://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
+           data = json.loads(url.read().decode())['data']
+
+         df = pd.DataFrame(data).iloc[:, np.r_[10:12, 13:16, 24:29, 30:35]]
+         df.columns = ['Team Name', 'County', 'Team Capacity', 'Census', 'Percent of Capacity on Census', 'Number with Schizophrenia', 'Number with Bipolar Disorder', 'Number with Depression', 'Number with Substance Abuse', 'Number in AOT', 'Number with Criminal Justice Activity', 'Number Homeless', 'Number Hospitalized', 'Number with Psychiatric ER Visits', 'Number Meeting High Utilization Criteria']
+         df.fillna(value=pd.np.nan, inplace=True)    
+
+         df['Percent of Capacity on Census'] = df['Percent of Capacity on Census'].apply(lambda x: "{:3.1f}".format(float(x)))
+         dfNYC = df.loc[df.County.isin(['Bronx', 'New York', 'Kings', 'Queens', 'Richmond'])]
+         dfFACT = df[df['Team Name'].str.contains('Forensic')]
+
+         #FACT Table
+         fig = go.Figure(data=[go.Table(
+             header=dict(values=list(df.columns),
+                         fill_color='paleturquoise',
+                         align='left'),
+             cells=dict(values= dfFACT.T,
+                         fill_color='lavender',
+                         align='left'))
+         ])
+         fig.update_layout(title='<b>NYC FACT Teams</b>', width=1600)
+         fig.layout.margin.update({'t':30, 'b':80})
+         fig.show()
+
+         #ACT Table
+         fig = go.Figure(data=[go.Table(
+             header=dict(values=list(df.columns),
+                         fill_color='paleturquoise',
+                         align='left'),
+             cells=dict(values= dfNYC.T,
+                         fill_color='lavender',
+                         align='left'))
+         ])
+         fig.update_layout(title='<b>NYC ACT Teams</b>', width=1600)
+         fig.layout.margin.update({'t':30, 'b':80})
+         fig.show()
+
   </script>
 
   <input id="zone"><button id="mybutton">click !</button>
