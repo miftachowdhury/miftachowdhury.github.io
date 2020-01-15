@@ -3,14 +3,18 @@
 <html>
 
  <head>
-  
   <title>NYC FACT Team Data</title>
+  <script src="https://pyodide.cdn.iodide.io/pyodide.js"></script>    
+ </head>
 
-  <script src="https://pyodide.cdn.iodide.io/pyodide.js"></script>  
-
-  <script>
+ <body>
+  <h1>NYC FACT Team Data</h1>          
+  <input id="zone"><button id="mybutton">click !</button>
+ </body>
+ 
+   <script>
    languagePluginLoader.then(() => {
-   pyodide.runPython("
+   pyodide.runPython('
          import urllib.request as ur
          import json
          import pandas as pd
@@ -53,19 +57,12 @@
          fig.update_layout(title='<b>NYC ACT Teams</b>', width=1600)
          fig.layout.margin.update({'t':30, 'b':80})
          fig.show()
-      ");
+      ');
    });   
   </script>  
-    
-  
- </head>
-
- <body>
-  <h1>NYC FACT Team Data</h1>
-          
-  <input id="zone"><button id="mybutton">click !</button>
-  
- </body>
+ 
+ 
+ 
  
 </html>
 
