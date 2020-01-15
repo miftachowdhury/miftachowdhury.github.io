@@ -14,7 +14,7 @@
  
    <script>
    languagePluginLoader.then(() => {
-   pyodide.runPython('
+   pyodide.runPython(`
          import urllib.request as ur
          import json
          import pandas as pd
@@ -57,12 +57,9 @@
          fig.update_layout(title='<b>NYC ACT Teams</b>', width=1600)
          fig.layout.margin.update({'t':30, 'b':80})
          fig.show()
-      ');
+      `);
    });   
   </script>  
  
- 
- 
- 
-</html>
+ </html>
 
