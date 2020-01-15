@@ -14,13 +14,13 @@
  
    <script>
    languagePluginLoader.then(() => {
-      pyodide.loadPackage(['pandas', 'numpy', 'matplotlib', 'plotly']).then(() => {
+      pyodide.loadPackage(['pandas', 'numpy', 'matplotlib']).then(() => {
            pyodide.runPython(`
                  import urllib.request as ur
                  import json
                  import pandas as pd
                  import numpy as np
-                 import plotly.graph_objects as go
+                 import matplotlib.pyplot as plt
 
                  with ur.urlopen('https://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
                    data = json.loads(url.read().decode())['data']
@@ -34,30 +34,18 @@
                  dfFACT = df[df['Team Name'].str.contains('Forensic')]
 
                  #FACT Table
-                 fig = go.Figure(data=[go.Table(
-                     header=dict(values=list(df.columns),
-                                 fill_color='paleturquoise',
-                                 align='left'),
-                     cells=dict(values= dfFACT.T,
-                                 fill_color='lavender',
-                                 align='left'))
-                 ])
-                 fig.update_layout(title='<b>NYC FACT Teams</b>', width=1600)
-                 fig.layout.margin.update({'t':30, 'b':80})
-                 fig.show()
+                 fig, ax = plt.subplots()
 
-                 #ACT Table
-                 fig = go.Figure(data=[go.Table(
-                     header=dict(values=list(df.columns),
-                                 fill_color='paleturquoise',
-                                 align='left'),
-                     cells=dict(values= dfNYC.T,
-                                 fill_color='lavender',
-                                 align='left'))
-                 ])
-                 fig.update_layout(title='<b>NYC ACT Teams</b>', width=1600)
-                 fig.layout.margin.update({'t':30, 'b':80})
-                 fig.show()
+                 fig.patch.set_visible(False)
+                 ax.axis('off')
+                 ax.axis('tight')
+        
+                 ax.table(cellText=df.values, colLabels=df.columns, loc='center')
+                 
+                 fig.tight_layout()
+
+                 plt.show()
+
               `);
          });
    });   
