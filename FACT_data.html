@@ -16,11 +16,11 @@
    languagePluginLoader.then(() => {
       pyodide.loadPackage(['pandas', 'numpy', 'matplotlib']).then(() => {
            pyodide.runPython(`
-              from urllib.request import urlopen
-              import json
-              import pandas as pd
-              import numpy as np
-              import matplotlib.pyplot as plt
+           from urllib.request import urlopen
+           import json
+           import pandas as pd
+           import numpy as np
+           import matplotlib.pyplot as plt
               
               with urlopen('https://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
                   data = json.loads(url.read().decode())['data']
