@@ -14,7 +14,7 @@
  
    <script>
    languagePluginLoader.then(() => {
-      pyodide.loadPackage(['pandas', 'numpy']).then(() => {
+      pyodide.loadPackage(['pandas', 'numpy', 'matplotlib', 'plotly']).then(() => {
            pyodide.runPython(`
                  import urllib.request as ur
                  import json
