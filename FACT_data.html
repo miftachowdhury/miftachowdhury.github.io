@@ -26,9 +26,9 @@ with urlopen('https://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
   data = json.loads(url.read().decode())['data']
               
 df = pd.DataFrame(data).iloc[:, np.r_[10:12, 13:16, 24:29, 30:35]]
-df.columns = ['Team Name', 'County', 'Team Capacity', 'Census', 'Percent of Capacity\non Census', 'Number with\nSchizophrenia', 'Number with\nBipolar Disorder', 'Number with\nDepression', 'Number with\nSubstance Abuse', 'Number in AOT', 'Number with\nCriminal Justice Activity', 'Number Homeless', 'Number Hospitalized', 'Number with\nPsychiatric ER Visits', 'Number Meeting\nHigh Utilization Criteria']
+df.columns = ['Team Name', 'County', 'Team Capacity', 'Census', 'Percent of Capacity on Census', 'Number with Schizophrenia', 'Number with Bipolar Disorder', 'Number with Depression', 'Number with Substance Abuse', 'Number in AOT', 'Number with Criminal Justice Activity', 'Number Homeless', 'Number Hospitalized', 'Number with Psychiatric ER Visits', 'Number Meeting High Utilization Criteria']
 df.fillna(value=pd.np.nan, inplace=True)    
-df['Percent of Capacity\non Census'] = df['Percent of Capacity\non Census'].apply(lambda x: "{:3.1f}".format(float(x)))
+df['Percent of Capacity on Census'] = df['Percent of Capacity on Census'].apply(lambda x: "{:3.1f}".format(float(x)))
 dfNYC = df.loc[df.County.isin(['Bronx', 'New York', 'Kings', 'Queens', 'Richmond'])]
 dfFACT = df[df['Team Name'].str.contains('Forensic')]
               
