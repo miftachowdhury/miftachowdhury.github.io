@@ -16,34 +16,34 @@
    languagePluginLoader.then(() => {
       pyodide.loadPackage(['pandas', 'numpy', 'matplotlib']).then(() => {
            pyodide.runPython(`
-           from urllib.request import urlopen
-           import json
-           import pandas as pd
-           import numpy as np
-           import matplotlib.pyplot as plt
+from urllib.request import urlopen
+import json
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
               
-              with urlopen('https://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
-                  data = json.loads(url.read().decode())['data']
+with urlopen('https://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
+  data = json.loads(url.read().decode())['data']
               
-              df = pd.DataFrame(data).iloc[:, np.r_[10:12, 13:16, 24:29, 30:35]]
-              df.columns = ['Team Name', 'County', 'Team Capacity', 'Census', 'Percent of Capacity\non Census', 'Number with\nSchizophrenia', 'Number with\nBipolar Disorder', 'Number with\nDepression', 'Number with\nSubstance Abuse', 'Number in AOT', 'Number with\nCriminal Justice Activity', 'Number Homeless', 'Number Hospitalized', 'Number with\nPsychiatric ER Visits', 'Number Meeting\nHigh Utilization Criteria']
-              df.fillna(value=pd.np.nan, inplace=True)    
-              df['Percent of Capacity\non Census'] = df['Percent of Capacity\non Census'].apply(lambda x: "{:3.1f}".format(float(x)))
-              dfNYC = df.loc[df.County.isin(['Bronx', 'New York', 'Kings', 'Queens', 'Richmond'])]
-              dfFACT = df[df['Team Name'].str.contains('Forensic')]
+df = pd.DataFrame(data).iloc[:, np.r_[10:12, 13:16, 24:29, 30:35]]
+df.columns = ['Team Name', 'County', 'Team Capacity', 'Census', 'Percent of Capacity\non Census', 'Number with\nSchizophrenia', 'Number with\nBipolar Disorder', 'Number with\nDepression', 'Number with\nSubstance Abuse', 'Number in AOT', 'Number with\nCriminal Justice Activity', 'Number Homeless', 'Number Hospitalized', 'Number with\nPsychiatric ER Visits', 'Number Meeting\nHigh Utilization Criteria']
+df.fillna(value=pd.np.nan, inplace=True)    
+df['Percent of Capacity\non Census'] = df['Percent of Capacity\non Census'].apply(lambda x: "{:3.1f}".format(float(x)))
+dfNYC = df.loc[df.County.isin(['Bronx', 'New York', 'Kings', 'Queens', 'Richmond'])]
+dfFACT = df[df['Team Name'].str.contains('Forensic')]
               
-              #FACT Table
-              fig, ax = plt.subplots()
-              fig.patch.set_visible(False)
-              ax.axis('off')
-              ax.axis('tight')
+#FACT Table
+fig, ax = plt.subplots()
+fig.patch.set_visible(False)
+ax.axis('off')
+ax.axis('tight')
 
-              tblfact = ax.table(cellText=dfFACT.values, colLabels=df.columns, loc='center')
-              tblfact.auto_set_font_size(False)
-              tblfact.set_fontsize(12)
-              tblfact.scale(2, 2)
-              fig.set_size_inches(w=20, h=5)
-              plt.show()
+tblfact = ax.table(cellText=dfFACT.values, colLabels=df.columns, loc='center')
+tblfact.auto_set_font_size(False)
+tblfact.set_fontsize(12)
+tblfact.scale(2, 2)
+fig.set_size_inches(w=20, h=5)
+plt.show()
               `);
          });
    });   
