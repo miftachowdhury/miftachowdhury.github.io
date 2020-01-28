@@ -22,7 +22,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
               
-with urlopen('https://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
+with urlopen('http://data.ny.gov/api/views/x5gj-r3vh/rows.json') as url:
   data = json.loads(url.read().decode())['data']
               
 df = pd.DataFrame(data).iloc[:, np.r_[10:12, 13:16, 24:29, 30:35]]
